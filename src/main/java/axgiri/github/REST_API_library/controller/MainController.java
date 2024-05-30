@@ -1,11 +1,10 @@
 package axgiri.github.REST_API_library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,18 +17,12 @@ import axgiri.github.REST_API_library.repository.BookRepo;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-@RestController
+@Controller
 @Slf4j
 @ToString
 public class MainController {
 
-    @GetMapping("/test")
-    @ResponseBody
-    public String test() {
-        return "Thymeleaf is working!";
-    }
-
-    @GetMapping("/")
+    @GetMapping("/index")
     public String login(){
         return "index";
     }
