@@ -27,12 +27,18 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/registration")
-    public String registration(){
+    @GetMapping("/signUp")
+    public String signUp(){
         return "signUp";
     }
 
-    //TODO: create second controller
+
+
+
+
+    
+
+    //TODO: create new controllers for them
     private final AccountRepo accountRepo;
     private final BookRepo bookRepo;
 
