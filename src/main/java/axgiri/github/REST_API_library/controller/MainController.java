@@ -22,16 +22,15 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 public class MainController {
 
-    @GetMapping("/index")
-    public String login(){
-        return "index";
+    @GetMapping("/main")
+    public String main(){
+        return "main";
     }
 
     @GetMapping("/signUp")
     public String signUp(){
         return "signUp";
     }
-
 
 
 

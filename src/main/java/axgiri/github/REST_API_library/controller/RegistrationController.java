@@ -22,13 +22,13 @@ public class RegistrationController {
         this.accountService = accountService;
     }
 
-    @GetMapping("registration")
+    @GetMapping("/registration")
     public String signUp(Model model){
         model.addAttribute("AccountDTO", new AccountDTO());
         return "signUp";
     }
 
-    @PostMapping("registration")
+    @PostMapping("/register")
     public String register(@Valid @ModelAttribute("AccountDTO")
     AccountDTO accountDTO, BindingResult result, Model model){
         if (result.hasErrors()){
@@ -37,6 +37,9 @@ public class RegistrationController {
         accountService.createAccount(accountDTO);
         return "redirect:/index";
     }
+
+    
+
 
 
 
