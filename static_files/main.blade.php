@@ -19,9 +19,13 @@
                 <button type="submit">delete</button>
             </form>
             <a href="{{ route('posts.edit', $post) }}">edit</a>
+            
         </div>
     @endforeach
     <h1>create post</h1>
     <a href="{{ route('posts.create') }}">create post</a>
+    <br><br>
+    <h1>weather in Almaty and in other cities</h1>
+    <a href="{{ route('weather.show')}}">weather</a>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WeatherController;
 
 Route::get('/blog', [PostController::class, 'index'])->name('posts.index');
 Route::get('/blog/create', [PostController::class, 'create'])->name('posts.create');
@@ -13,3 +14,6 @@ Route::get('/blog/{post}/edit', [PostController::class, 'edit'])->name('posts.ed
 Route::put('/blog/{post}', [PostController::class, 'update'])->name('posts.update');
 
 Route::delete('/blog/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+
+Route::get('/weather', [WeatherController::class, 'show'])->name('weather.show');
