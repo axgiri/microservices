@@ -1,0 +1,86 @@
+# version: '3'
+
+# services:
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#     - "8080:80"
+#     volumes:
+#       - ../../static_files:/var/www/static_files
+#       - ../php_services:/var/www/php_services
+#       - ./nginx/conf.d:/etc/nginx/conf.d/
+#     container_name: app
+
+version: '3'
+
+networks:
+  eds_net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 10.7.0.0/16
+        gateway: 10.7.0.1
+
+volumes:
+  service_db:
+    driver: local
+  pgadmin:
+    driver: local
+
+services:
+  app:
+    image: webdevops/php-nginx:8.2-alpine
+    hostname: service
+    working_dir: /app
+    volumes:
+      - .:/app
+      - .deploy/nginx/conf.d/nginx.conf:/opt/docker/etc/nginx/vhost.conf
+      - .deploy/nginx/conf.d/nginx.conf:/nginx/conf.d/
+      - ../../static_files:/var/www/static_files
+      # - ../php_services:/var/www/php_services
+      # - ./nginx/conf.d:/etc/nginx/conf.d/
+    ports:
+      - "8080:80"
+    networks:  
+      eds_net:
+        ipv4_address: 10.7.0.3
+    restart: always
+
+  pg:
+    image: postgres:13-alpine
+    hostname: service_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - service_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1
+      POSTGRES_DB: posts_db
+
+    networks: 
+      eds_net:
+        ipv4_address: 10.7.0.2
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4
+    hostname: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin123@cic.kz
+      PGADMIN_DEFAULT_PASSWORD: root
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "7313:80"
+    stdin_open: true
+    depends_on:
+      - pg
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+      - .dev/pgadmin4/servers.json:/pgadmin4/servers.json
+    networks:  
+      eds_net:
+        ipv4_address: 10.7.0.4
+    restart: always

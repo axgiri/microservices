@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use Illuminate\Support\Facades\Log;
+use App\Service\PostService;
 
-class PostController extends Controller {
+class PostResourceController extends Controller {
+    
+    public function __construct(PostService $postService){
+        $this->postService = $postService; 
+    }
+    protected $postService;
     public function index(){
-        $posts = Post::all();
+        // $posts = Post::all();
+        $posts = $this -> postService->getAll();
         return view('main', compact('posts'));
     }
 
@@ -16,29 +22,25 @@ class PostController extends Controller {
         return view('create');
     }
 
-    public function store(){
-        $data = request()->validated();
-        Log::info($data);
+    public function store(PostRequest $request){
+        $data = $request->validated();
         Post::create($data);
         return redirect()->route('posts.index');
+    }
+
+    public function show(string $id)
+    {
+        //
     }
 
     public function edit(Post $post){
         return view('edit', compact('post'));
     }
 
-    public function update(PostRequest $request){
-        Log::info($request->validated());
+    public function update(PostRequest $request, $id) {
+        \Log::info($id);
         $data = $request->validated();
-        $request->validated();
-        $request->all();
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images', 'public');
-        }
-
-        // $post->update($data);
-
+        $this->postService->updatePost($id, $data);
         return redirect()->route('posts.index');
     }
 

@@ -10,3 +10,5 @@ class Post extends Model{
 
     protected $fillable = ['title', 'content', 'image'];
 }
+#TODO:
+#созать миграции для постов *(можно руками)

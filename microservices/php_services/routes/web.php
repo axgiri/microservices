@@ -1,19 +1,25 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostResourceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherController;
 
-Route::get('/blog', [PostController::class, 'index'])->name('posts.index');
-Route::get('/blog/create', [PostController::class, 'create'])->name('posts.create');
+Route::get("/", function () {
+    return view("welcome");
+});
 
-Route::post('/blog', [PostController::class, 'store'])->name('posts.store');
+Route::resource('posts', PostResourceController::class)->only(['index', 'edit']);
 
-Route::get('/blog/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+// Route::get('/blog', [PostController::class, 'index'])->name('posts.index');
+// Route::get('/blog/create', [PostController::class, 'create'])->name('posts.create');
 
-Route::put('/blog/{post}', [PostController::class, 'update'])->name('posts.update');
+// Route::post('/blog', [PostController::class, 'store'])->name('posts.store');
 
-Route::delete('/blog/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+// Route::get('/blog/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
 
+// Route::put('/blog/{post}', [PostController::class, 'update'])->name('posts.update');
 
-Route::get('/weather', [WeatherController::class, 'show'])->name('weather.show');
+// Route::delete('/blog/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+// Route::get('/weather', [WeatherController::class, 'show']);//->name('weather.show');
