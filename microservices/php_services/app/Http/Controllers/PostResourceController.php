@@ -24,7 +24,9 @@ class PostResourceController extends Controller {
 
     public function store(PostRequest $request){
         $data = $request->validated();
-        Post::create($data);
+        // Post::create($data);
+        $data['image'] = $request->file('image');
+        $this -> postService->storePost($data);
         return redirect()->route('posts.index');
     }
 
@@ -38,7 +40,6 @@ class PostResourceController extends Controller {
     }
 
     public function update(PostRequest $request, $id) {
-        \Log::info($id);
         $data = $request->validated();
         $this->postService->updatePost($id, $data);
         return redirect()->route('posts.index');

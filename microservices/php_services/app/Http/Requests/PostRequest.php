@@ -14,7 +14,7 @@ class PostRequest extends FormRequest {
             'id' => 'sometimes',
             'title' => 'required|string',
             'content' => 'required|string',
-            // 'image' => 'file|image',
+            'image' => 'file|image',
         ];
     }
 }
